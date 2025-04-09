@@ -22,7 +22,7 @@ void visitDFS(int nd, vector<int> &topoSort, vector< vector<int> > edges, vector
 }
 
 vector<int> qrySolve(vector< vector<int> > edges){ // esta quiza necesita ser otra estructura
-    cout << "entrndo a qrySolve" << endl;
+    cout << "entrando a qrySolve" << endl;
     int N = edges.size(); 
     vector<int> topoSort(N); vector<int> visited(N, 0);
 
@@ -35,9 +35,9 @@ vector<int> qrySolve(vector< vector<int> > edges){ // esta quiza necesita ser ot
 
 int main(){
     int T, N, M; cin >> T;
-    vector< vector <int> > solution;
+    // vector< vector <int> > solution;
     
-    cout << "entrndo a main" << endl;
+    cout << "entrando a main" << endl;
     
     for(int t=0; t<T; t++){
         cin >> N >> M;
@@ -56,8 +56,13 @@ int main(){
         
         cout << "se han leído todas las entradas" << endl;
         
-        solution.push_back(qrySolve(edges));
-        
+        vector <int> sol = qrySolve(edges);
+
+        for(const auto elem : sol){
+            cout << elem << " ";
+        }
+        cout << endl;
+        // NO IMPRIME LO Q DEBERIA
     }
 
 }
