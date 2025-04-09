@@ -1,6 +1,5 @@
 // Tarea 4 - EDAII
 
-// este codigo ya corre pero no hace lo que debería
 #include <iostream>
 #include <vector>
 #include <complex>
@@ -20,7 +19,6 @@ public:
     
     LiChaoTree(){
         line.assign(4 * maxn, {0, 10});
-        //add_line({0, 10});
     }
     
     ftype dot(point a, point b) {
