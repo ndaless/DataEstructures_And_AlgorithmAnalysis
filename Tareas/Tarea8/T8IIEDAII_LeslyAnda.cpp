@@ -7,7 +7,7 @@ class DPalign{
     vector< vector<char> > bt;
     string A; string B;
     int lenA, lenB;
-    int pInsert = -1, pDelete = -1, match = 2, mismatch = -1;
+    int pInsert = -1, pDelete = -1, match = 1, mismatch = -1;
 
     int count;
 
@@ -34,8 +34,8 @@ public:
 
     void buildDP(){
 
-        for(int i = 0; i < DP.size(); i++){ DP[i][0] = i; bt[i][0] = 'v'; }
-        for(int j = 0; j < DP[0].size(); j++) {DP[0][j] = j; bt[0][j] = 'h';}
+        for(int i = 0; i < DP.size(); i++){ DP[i][0] = i * pDelete; bt[i][0] = 'v'; }
+        for(int j = 0; j < DP[0].size(); j++) {DP[0][j] = j * pInsert; bt[0][j] = 'h';}
         bt[0][0] = 'd';
 
         for(int i = 1; i < DP.size(); i++){
@@ -48,19 +48,23 @@ public:
 
                 if( DP[i][j] < DP[i - 1][j] + pDelete){ // space in B, vertical
                     // cout << "entrando a vertical para " << i << ", " << j << endl;
-                    DP[i][j] = DP[i - 1][j];
+                    DP[i][j] = DP[i - 1][j] + pDelete;
                     bt[i][j] = 'v';
                 }
                 // si eran iguales, se va a quedar con el vertical
                 if( DP[i][j] < DP[i][j - 1] + pInsert){ // space in A, horizontal
                     // cout << "entrando a horizontal para " << i << ", " << j << endl;
-                    DP[i][j] = DP[i][j - 1];
+                    DP[i][j] = DP[i][j - 1] + pInsert;
                     bt[i][j] = 'h';
                 }
 
             }
         }
         return;
+    }
+
+    int getScore(){
+        return DP[lenA][lenB];
     }
 
     int getChanges(){
@@ -105,12 +109,18 @@ public:
 };
 
 int main(){
-    string A = "MMPGMPPGG", B = "MGPMPG";
+    string A = "MMPGMPPGG", B = "MMPGMPPGG";
+    // string A = "MMPGMPPGG", B = "MGPMPG";
     // string B = "MMPGMPPGG", A = "MGPMPG";
     // string A = "ABC", B = "ABCDEF";
     // string A = "ABCDEF", B = "ABC"; // funciona si lenA > lenB, si no no
+    // string A = "ACAATCC", B = "AGCATGC";
 
     DPalign align(A, B);
 
-    cout << align.getChanges() << endl;
+    align.printDP();
+    cout << endl;
+    align.printBT();
+
+    cout << align.getScore() << endl;
 }
