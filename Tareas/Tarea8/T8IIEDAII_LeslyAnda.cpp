@@ -1,92 +1,57 @@
-# include <bits/stdc++.h>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-class DPalign{
+class StrMerge{
     vector< vector<int> > DP;
-    vector< vector<char> > bt;
-    string A; string B;
-    int lenA, lenB;
-    int pInsert = -1, pDelete = -1, match = 1, mismatch = -1;
-
-    int count;
+    string A, B, C;
+    int lenA, lenB, lenC;
 
 public:
+    StrMerge(const string& _A, const string& _B, const string& _C){
+        A = _A; B = _B; C = _C;
+        lenA = A.size(); 
+        lenB = B.size();
+        lenC = C.size();
 
-    DPalign(const string& _A, const string& _B){
-        A = _A; B = _B;
-        lenA = _A.size(); lenB = _B.size(); // (int) strsize(A); ?
-
-        // fix problem with lengths
-        if(lenA < lenB){
-            A = _B; B = _A;
-            lenA = _B.size(); lenB = _A.size();
-        }
-
-        DP.assign(lenA+1, vector<int> (lenB+1)); 
-        bt.assign(lenA+1, vector<char> (lenB+1)); 
-
-        count = 0;
+        DP.assign(lenA + 1, vector<int> (lenB + 1)); // +1 pq agregamos caracter vacio al inicio de a y b
 
         buildDP();
-        
     }
 
     void buildDP(){
-
-        for(int i = 0; i < DP.size(); i++){ DP[i][0] = i * pDelete; bt[i][0] = 'v'; }
-        for(int j = 0; j < DP[0].size(); j++) {DP[0][j] = j * pInsert; bt[0][j] = 'h';}
-        bt[0][0] = 'd';
-
+        // llenamos [0][0] y primer fila y columna
+        DP[0][0] = 1;
+        for(int i = 1; i < DP.size(); i++)
+            DP[i][0] = (A[i-1] == C[i-1]) ? 1 : 0;
+        for(int j = 1; j < DP[0].size(); j++)
+            DP[0][j] = (B[j-1] == C[j-1]) ? 1 : 0;
+        
         for(int i = 1; i < DP.size(); i++){
             for(int j = 1; j < DP[0].size(); j++){
-                DP[i][j] = DP[i - 1][j - 1] + (A[i - 1] == B[j - 1] ? match : mismatch);
-                bt[i][j] = 'd';
-
-                // estamos dandole prioridad a q aparezcan verticales en la tabla bt
-                // por eso no funciona si lenA > lenB, pq 
-
-                if( DP[i][j] < DP[i - 1][j] + pDelete){ // space in B, vertical
-                    // cout << "entrando a vertical para " << i << ", " << j << endl;
-                    DP[i][j] = DP[i - 1][j] + pDelete;
-                    bt[i][j] = 'v';
+                if(DP[i][j - 1] == 1 && B[j - 1] == C[i+j - 1]){ // horizontal
+                    cout << "Llenando DP[" << i << "][" << j <<"] con 1." << endl;
+                    DP[i][j] = 1;
                 }
-                // si eran iguales, se va a quedar con el vertical
-                if( DP[i][j] < DP[i][j - 1] + pInsert){ // space in A, horizontal
-                    // cout << "entrando a horizontal para " << i << ", " << j << endl;
-                    DP[i][j] = DP[i][j - 1] + pInsert;
-                    bt[i][j] = 'h';
+                else if(DP[i - 1][j] == 1 && A[i - 1] == C[i+j - 1]){ // vertical 
+                    cout << "Llenando DP[" << i << "][" << j <<"] con 1." << endl;
+                    DP[i][j] = 1;
                 }
-
+                else{
+                    cout << "Llenando DP[" << i << "][" << j <<"] con 0." << endl;
+                    DP[i][j] = 0;
+                }
             }
         }
         return;
     }
 
-    int getScore(){
-        return DP[lenA][lenB];
-    }
+    bool isMerge(){
+        // si C tiene mas o menos caracteres que A y B juntas, no es mezcla
+        if(lenC != lenA + lenB) return 0;
 
-    int getChanges(){
-        // nt idx = lenA + lenB;
-        int i = lenA, j = lenB; // cout << i << "=" << lenA << "=" << bt.size()<< endl;
-
-        while(!(i == 0 && j == 0)){ // quiero q se detenga cuando i == 0 && j == 0
-            // cout << i << " " << j << endl; 
-            if(bt[i][j] == 'h'){
-                // cout << "h ";
-                count ++; j--;
-            }
-            else if(bt[i][j] == 'v'){
-                // cout << "v ";
-                count ++; i--;
-            }
-            else{
-                // cout << "d ";
-                i--; j--;
-            }
-        }
-        return count;
+        return DP[lenA][lenB]; // sin -1 pq en la DP agregamos un vacio al inicio
+                                // idx al final de tabla coincide con numero de caracteres en str
     }
 
     void printDP(){
@@ -98,29 +63,20 @@ public:
         }
     }
 
-    void printBT(){
-        for(int i = 0; i < bt.size(); i++){
-            for(int j = 0; j < bt[0].size(); j++){
-                cout << bt[i][j] << " ";
-            }
-            cout << endl;
-        }
-    }
 };
 
 int main(){
-    string A = "MMPGMPPGG", B = "MMPGMPPGG";
-    // string A = "MMPGMPPGG", B = "MGPMPG";
-    // string B = "MMPGMPPGG", A = "MGPMPG";
-    // string A = "ABC", B = "ABCDEF";
-    // string A = "ABCDEF", B = "ABC"; // funciona si lenA > lenB, si no no
-    // string A = "ACAATCC", B = "AGCATGC";
+    // se puede implementar para repsonder muchas qrys con solo una matriz?
+    string A = "SILAO", B = "LEON", C = "SILLEAOON";
+    // string A = "SILAO", B = "LEON", C = "SILAO";
+    // string A = "SILAO", B = "LEON", C = "SILLEAOONO";
+    // string A = "SILAO", B = "LEON", C = "SILALOEON";
+    // string A = "SILAO", B = "LEON", C = "SLILEANOO";
+    StrMerge merge(A, B, C);
 
-    DPalign align(A, B);
+    // merge.printDP();
 
-    align.printDP();
-    cout << endl;
-    align.printBT();
+    cout << merge.isMerge() << endl;
 
-    cout << align.getScore() << endl;
+    return 0;
 }
