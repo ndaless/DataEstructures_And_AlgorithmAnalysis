@@ -35,7 +35,7 @@ public:
                     // cout << "Llenando DP[" << i << "][" << j <<"] con 1." << endl;
                     DP[i][j] = 1;
                 }
-                // si podemos construir la anterior y el caracter de A machea, true
+                // si podemos construir la superior y el caracter de A machea, true
                 else if(DP[i - 1][j] == 1 && A[i - 1] == C[i+j - 1]){ // vertical 
                     // cout << "Llenando DP[" << i << "][" << j <<"] con 1." << endl;
                     DP[i][j] = 1;
