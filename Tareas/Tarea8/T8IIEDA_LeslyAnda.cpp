@@ -27,18 +27,22 @@ public:
         for(int j = 1; j < DP[0].size(); j++)
             DP[0][j] = (B[j-1] == C[j-1]) ? 1 : 0;
         
+        // llenamos tabla
         for(int i = 1; i < DP.size(); i++){
             for(int j = 1; j < DP[0].size(); j++){
+                // si podemos construir la anterior y el caracter de B machea, true
                 if(DP[i][j - 1] == 1 && B[j - 1] == C[i+j - 1]){ // horizontal
-                    cout << "Llenando DP[" << i << "][" << j <<"] con 1." << endl;
+                    // cout << "Llenando DP[" << i << "][" << j <<"] con 1." << endl;
                     DP[i][j] = 1;
                 }
+                // si podemos construir la anterior y el caracter de A machea, true
                 else if(DP[i - 1][j] == 1 && A[i - 1] == C[i+j - 1]){ // vertical 
-                    cout << "Llenando DP[" << i << "][" << j <<"] con 1." << endl;
+                    // cout << "Llenando DP[" << i << "][" << j <<"] con 1." << endl;
                     DP[i][j] = 1;
                 }
+                // si no podemos construir, false
                 else{
-                    cout << "Llenando DP[" << i << "][" << j <<"] con 0." << endl;
+                    // cout << "Llenando DP[" << i << "][" << j <<"] con 0." << endl;
                     DP[i][j] = 0;
                 }
             }
@@ -50,7 +54,7 @@ public:
         // si C tiene mas o menos caracteres que A y B juntas, no es mezcla
         if(lenC != lenA + lenB) return 0;
 
-        return DP[lenA][lenB]; // sin -1 pq en la DP agregamos un vacio al inicio
+        return DP[lenA][lenB]; // sin -1 pq en la DP pq agregamos un vacio al inicio
                                 // idx al final de tabla coincide con numero de caracteres en str
     }
 

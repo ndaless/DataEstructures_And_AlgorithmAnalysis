@@ -33,27 +33,26 @@ public:
     }
 
     void buildDP(){
-
+        // llenamos casos base
         for(int i = 0; i < DP.size(); i++){ DP[i][0] = i; bt[i][0] = 'v'; }
         for(int j = 0; j < DP[0].size(); j++) {DP[0][j] = j; bt[0][j] = 'h';}
         bt[0][0] = 'd';
 
+        // llenamos tabla
         for(int i = 1; i < DP.size(); i++){
             for(int j = 1; j < DP[0].size(); j++){
+                // consideramos diagonal
                 DP[i][j] = DP[i - 1][j - 1] + (A[i - 1] == B[j - 1] ? match : mismatch);
                 bt[i][j] = 'd';
 
-                // estamos dandole prioridad a q aparezcan verticales en la tabla bt
-                // por eso no funciona si lenA > lenB, pq 
-
-                if( DP[i][j] < DP[i - 1][j] + pDelete){ // space in B, vertical
-                    // cout << "entrando a vertical para " << i << ", " << j << endl;
-                    DP[i][j] = DP[i - 1][j];
+                //consideramos celda superior
+                if( DP[i][j] < DP[i - 1][j] + pDelete){ // space in B, vertical             // estamos dandole prioridad a q aparezcan verticales en la tabla bt   
+                    DP[i][j] = DP[i - 1][j];                                                // por eso no funciona si lenA < lenB, pq 
                     bt[i][j] = 'v';
                 }
-                // si eran iguales, se va a quedar con el vertical
-                if( DP[i][j] < DP[i][j - 1] + pInsert){ // space in A, horizontal
-                    // cout << "entrando a horizontal para " << i << ", " << j << endl;
+
+                // considremos celda anterior
+                if( DP[i][j] < DP[i][j - 1] + pInsert){ // space in A, horizontal           // si eran iguales, se va a quedar con el vertical
                     DP[i][j] = DP[i][j - 1];
                     bt[i][j] = 'h';
                 }
@@ -64,22 +63,17 @@ public:
     }
 
     int getChanges(){
-        // nt idx = lenA + lenB;
-        int i = lenA, j = lenB; // cout << i << "=" << lenA << "=" << bt.size()<< endl;
+        int i = lenA, j = lenB; 
 
-        while(!(i == 0 && j == 0)){ // quiero q se detenga cuando i == 0 && j == 0
-            // cout << i << " " << j << endl; 
+        while(!(i == 0 && j == 0)){ // se detiene cuando i == 0 && j == 0
             if(bt[i][j] == 'h'){
-                // cout << "h ";
-                count ++; j--;
+                count ++; j--; // regresamos horizontal
             }
             else if(bt[i][j] == 'v'){
-                // cout << "v ";
-                count ++; i--;
+                count ++; i--; // subimos vertical
             }
             else{
-                // cout << "d ";
-                i--; j--;
+                i--; j--; // subimos en diagonal
             }
         }
         return count;
