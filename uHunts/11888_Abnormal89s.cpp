@@ -64,13 +64,12 @@ int getPalindrom(string s){
 // }
 
 void solve(string s){
-    int lenPal = getPalindrom(s);
-
-// si el palindromo mas grande es toda la cadena
-    if(lenPal == s.size()){
+    if(s.size() == 1){
         cout << "palindrome" << endl;
         return;
     }
+
+    int lenPal = getPalindrom(s);
     
 // si  no, buscamos la segunda cadena
     string sRev = s; reverse(sRev.begin(), sRev.end()); // reverse no te devuelve un string, modifica el string pq es un metodo
@@ -87,11 +86,38 @@ void solve(string s){
     // aqui debemos salir con la cadena con el palindromo mas grande al inicio
     // cout << "El primer palindromo es: " << s.substr(0, lenPal) << endl; // .substr no modifica la cadena?
 
+    // identificamos si es un alindromo formado por dos palindromos
+    int flag = 0;
+    if(lenPal == s.size()){
+        if(lenPal % 2 == 0) {
+            // cout << lenPal << " ";
+            lenPal = lenPal / 2;
+            // cout << lenPal << endl;
+            flag = 1; // par
+        }
+        else{
+            // cout << lenPal << " ";
+            lenPal = lenPal / 2 + 1;
+            // cout << lenPal << endl;
+        }
+    }
+
     // veremos si la cadena restante es un palindromo
     string secStr = s.substr(lenPal); // cout << "La segunda string es:" << secStr << endl;
     int lenSecPal = getPalindrom(secStr); 
     if(lenSecPal == secStr.size()){
         cout << "alindrome" << endl;
+        return;
+    }
+
+    // si no, solo era un palindromo
+    if(flag == 1) lenPal = lenPal * 2;
+    else lenPal = lenPal * 2 - 1;
+    // cout << lenPal << endl;
+
+    // si el palindromo mas grande es toda la cadena
+    if(lenPal == s.size()){
+        cout << "palindrome" << endl;
         return;
     }
     
@@ -114,8 +140,12 @@ int main(){
 
     for (int t = 0; t < T; t++){
         cin >> s;
+        // if(s == "") cout << "palindrome" << endl;
         solve(s);
     }
 
     return 0;
 }
+
+// madamimadam lml momxy aabaa
+// son impares 
