@@ -13,7 +13,7 @@ typedef tree <pair<int, string>, // change type
             tree_order_statistics_node_update> ordered_set;
 
 ordered_set uniqueSubStrings(const string& s){
-    const int p = 31;
+    const int p = 31; // 33
     const int m = 1000000007;
 
     // precalculamos las potencias
@@ -72,7 +72,7 @@ set<pair<string, int>> uniqueGoodSubStrings(const string& s, const string& val, 
 
     // for(const auto value : hashedPrefix) cout << value << " "; cout << endl;
 
-    set<pair<string, int>> disctint;
+    set<pair<string, int>> disctint; // aqui
     
     // cycle over substring lenghts
     for(int l = 1; l <= s.size(); l++){
