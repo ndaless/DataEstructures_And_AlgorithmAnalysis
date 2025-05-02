@@ -7,71 +7,62 @@ class Password{
     vector<long long> hashed_prefixes;
     vector<long long> pi;
 
-    const int p = 33;
+    const int p = 31;
     const int m = 1000000007;
 
-void getPi(){
+void getPi(){ // O(n)
     pi[0] = 1;
     for (int i = 1; i < s.size(); i++)
         pi[i] = (pi[i-1] * p) % m;
 }
 
-void getHashPfx() {
-    
+void getHashPfx() { // O(n)
     for (int i = 0; i < s.size(); i++)
         hashed_prefixes[i+1] = (hashed_prefixes[i] + (s[i] - 'a' + 1) * pi[i]) % m;
-
-    // map<string, long long> distinct;
-
-    // // Cycle over substring lengths
-    // for (int l = 1; l <= n; l++) {
-    //     // Cycle over starting positions
-    //     for (int i = 0; i <= n - l; i++) {
-    //         long long hashed = (hashed_prefixes[i + l] + m - hashed_prefixes[i]) % m; // hp[0] = 0 y hp[1] corresponde a s[0]
-    //         // To compare hashed values, set them all to power pˆ{n-1}
-    //         // As the difference above is the hash multiplies by pˆi
-    //         // we multiply by pˆ{n-1-i}
-    //         hashed = (hashed * pi[n-i-1]) % m;
-    //         distinct[s.substr(i, l)] = hashed;
-    //     }
-    // }
 }
+
 public:
-long long getHashVal(int i, int l){
-    // cout << s.substr(i,l);
+long long getHashVal(int i, int l){ // O(1)
     long long hashed = (hashed_prefixes[i + l] + m - hashed_prefixes[i]) % m; // hp[0] = 0 y hp[1] corresponde a s[0]
     hashed = (hashed * pi[n-i-1]) % m;
     return hashed;
 }
 
-int BSTL(int L){ // binarySearchTheLenght
-    // si no funcionó para ninguna len
-    // cout << L << endl;
+int BSTL(int L){ // binarySearchTheLenght O(log n)
     if(L == 0) return L; 
 
-    if(worksFor(L)){
-        // cout << "funcionó para " << L << endl;
-        if(!worksFor(L+1)) return L;
-        L = BSTL(L + L/2);
+    if(worksFor(L)){ // si para la longitud L la substr es password
+        // cout << " funciona para " << s.substr(0, L) << endl;
+        if(!worksFor(L+1)){
+            // cout << " no funciona para " << s.substr(0, L+1) << endl;
+            return L; // pero para L+1 NO, L es la respuesta
+        }
+        L = BSTL(L + L/2); // busca una más grande
     }
-    else{
-        if(worksFor(L-1)) return L-1;
-        L = BSTL(L - L/2);
+    else{ // si para la longitud L la substr NO es password
+        // cout << " no funciona para " << s.substr(0, L) << endl;
+        if(worksFor(L-1)){
+            // cout << " funciona para " << s.substr(0, L-1) << endl;
+            return L-1; // pero para L+1 SI, L-1 es la respuesta
+        }
+        L = BSTL(L - L/2); // busca una más pequena
     }
 
     return L;
 }
 
-bool worksFor(int L){
-    // cout << "comparando: " << s.substr(0,L) << " con " << s.substr(n-L, L) << endl;
+bool worksFor(int L){ //(O(n))
     long long hpfx = getHashVal(0, L), hsfx = getHashVal(n-L, L);
-    if(hpfx != hsfx) return false;
-
+    // cout << s.substr(0, L) << "-" << hpfx << ", " << s.substr(0, L) << "-" << hsfx << endl;
+    if(hpfx != hsfx){
+        // cout << "no es sufijo" << endl;
+        return false; // si no es sufijo, no funciona
+    }
     for(int i = 1; i < n-L; i++)
-        if(getHashVal(i, L) == hpfx) return true;
+        if(getHashVal(i, L) == hpfx) return true; // si es pfx, sfx y existe en medio, funciona
 
-    // cout << " returning false" << endl;
-    return false;
+    // cout << "no esta en medio" << endl;
+    return false; // si es pfx, sfx pero no esta en medio no funciona
 }
 
 public:
@@ -97,7 +88,8 @@ int main(){
     string s; cin >> s;
     Password pwd(s);
 
-    // cout << s.substr(0,3) <<":" << endl << pwd.getHashVal(0, 3) << endl << s.substr(s.size()-3, 3) << ":" << endl << pwd.getHashVal(14-3, 3) << endl;
     pwd.solve();
     return 0;
 }
+
+// no funciona con nfbdzgdlbjhrlvfryyjbvtsmzacxglcvukmyexdgpuiwvqbnfbdzgdlbjhrlvfryyjbtuomcwbwvlhefnfbdzgdlbjhrlvfryyjb

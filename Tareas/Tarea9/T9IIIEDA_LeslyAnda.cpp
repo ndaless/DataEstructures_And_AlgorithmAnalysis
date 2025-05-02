@@ -3,18 +3,50 @@
 using namespace std;
 
 class myString{
-    string s; int n;
-
     vector<long long> hashed_prefixes;
     vector<long long> pi;
 
     const int p = 33;
     const int m = 1000000007;
 
-    bool operator<(int k, int l, int n) const {
-        return compare(k, l, n);
+public:
+    string s; int n;
+
+    myString(const string &_s){
+        s = _s;
+        n = s.size();
+        hashed_prefixes.assign(s.size() + 1, 0);
+        pi.resize(s.size());
+
+        getPi();
+        getHashPfx();
     }
-    
+
+    bool operator<(myString &other){
+        int idx = getLen(other, other.s.size()); // calculate the missmatch
+        if(idx == -1) return s[0] < other.s[0];
+
+        return (s[idx] < other.s[idx]); // true if s[k, n] <= s[l, n]
+    }
+
+    long long getHashVal(int i, int l){
+        // cout << s.substr(i,l);
+        long long hashed = (hashed_prefixes[i + l] + m - hashed_prefixes[i]) % m; // hp[0] = 0 y hp[1] corresponde a s[0]
+        hashed = (hashed * pi[n-i-1]) % m;
+        return hashed;
+    }
+
+    void solve(){
+        int minIdx = 0; int len = n/2;
+        for(int idx = 1; idx < len; idx++){
+            // cout << " comparando: " << s.substr(idx, len) << "<" << s.substr(minIdx, len);
+            if(s.substr(idx, len) < s.substr(minIdx, len)) minIdx = idx;
+        }
+        cout << minIdx + 1 << endl; // pq problema indexa en 1
+        return;
+    }
+
+private:
     void getPi(){
         pi[0] = 1;
         for (int i = 1; i < s.size(); i++)
@@ -26,58 +58,45 @@ class myString{
             hashed_prefixes[i+1] = (hashed_prefixes[i] + (s[i] - 'a' + 1) * pi[i]) % m;
     }
 
-    bool compare(int k, int l, int n){
-        int idx = getIdx(k, l, n);
-        if(idx == -1) return true;
+    // returns the lenght of the largest common prefix 
+    int getLen(myString &s2, int L){ // BS, L = len of str actual to compare
+        long long hs1 = hashed_prefixes[L], hs2 = s2.hashed_prefixes[L];
 
-        return (s_1[idx] < s_2[idx]);
-    }
-
-    int getIdx(int ini_1, int ini_2, int L){ // BS, L = len of str actual to compare
-        int idx; if(ini_2 < ini_1) swap(ini_1, ini_2); // so ini_1 is always the first
-
-        long long hs_1 = getHashVal(ini_1, L), hs_2 = getHashVal(ini_2, L);
-
-        if(L < ini_1) return -1;
-        if(hs_1 != hs_2){
-            if(getHashVal(ini_1, L-1) != getHashVal(ini_2, L-1)) return L; // L is a lenght so -1
-            idx = getIdx(ini_1, ini_2, L-L/2);
+        if(hs1 != hs2){
+            if(hashed_prefixes[L-1] == s2.hashed_prefixes[0, L-1]) return L-1;
+            L = getLen(s2, L-L/2);
         }
-        else idx = getIdx(ini_1, ini_2, L+L/2);
-
-        return idx;
+        else{
+            if(hashed_prefixes[L+1] != s2.hashed_prefixes[L+1]) return L;
+            L = getLen(s2, L+L/2);
+        }
+        return L;
     }
 
-public:
-    myString(const string &_s){
-        s = _s + _s;
-        n = s.size();
-        hashed_prefixes.assign(s.size() + 1, 0);
-        pi.resize(s.size());
+    // returns the lenght of the largest common prefix 
+    // int getLen(myString &s2, int L){ // BS, L = len of str actual to compare
+    //     long long hs1 = getHashVal(0, L), hs2 = s2.getHashVal(0, L);
 
-        getPi();
-        getHashPfx();
-    }
-
-    long long getHashVal(int i, int l){
-        // cout << s.substr(i,l);
-        long long hashed = (hashed_prefixes[i + l] + m - hashed_prefixes[i]) % m; // hp[0] = 0 y hp[1] corresponde a s[0]
-        hashed = (hashed * pi[n-i-1]) % m;
-        return hashed;
-    }
-
-    // int solve(){
-    //     int maxIdx = 0;
-    //     for(int i = 0; i < n; i++){
-    //         if(s_max < s_i) maxIdx = i;
+    //     // if(L <= 0) return -1;
+    //     if(hs1 != hs2){
+    //         if(getHashVal(0, L-1) == s2.getHashVal(0, L-1)) return L-1;
+    //         L = getLen(s2, L-L/2);
     //     }
-    //     return maxIdx;
+    //     else{
+    //         if(getHashVal(0, L+1) != s2.getHashVal(0, L+1)) return L;
+    //         L = getLen(s2, L+L/2);
+    //     }
+    //     return L;
     // }
+
 };
 
 int main(){
-    string _s; cin >> _s;
-    myString s(_s);
-
-    s.solve();
+    int T; cin >> T;
+    for(int t = 0; t<T; t++){
+        string _s; cin >> _s;
+        myString s(_s + _s);
+        s.solve();
+    }
+    return 0;
 }
