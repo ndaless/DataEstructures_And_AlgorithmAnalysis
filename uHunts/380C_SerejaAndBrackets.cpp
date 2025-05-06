@@ -6,6 +6,7 @@ class ST{
     vector<tuple<int, int, int>> st;
     vector<int> sVec;
     int N;
+    int count;
 
     void build(int v, int tl, int tr){ // el vector se puede llamar con el string? necesitamos el vector?
         if(tl == tr){
@@ -60,6 +61,7 @@ public:
         N = sVec.size();
         st.resize(4*N); // si es 4n? que es mejor, vector o tupla?
         build(0, 0, N-1);
+        count = 0;
     }
 
     void printST(){
@@ -70,6 +72,9 @@ public:
 
     tuple<int, int, int> ans(int v, int tl, int tr, int l, int r){
         cout << "calculando answare en st en nodo " << v << endl;
+        count ++;
+        if(count == 10) 
+            return make_tuple(0, 0, 0);
         if(l > r) // 
             return make_tuple(0, 0, 0);
 
