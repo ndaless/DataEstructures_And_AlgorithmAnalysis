@@ -71,7 +71,7 @@ public:
     }
 
     tuple<int, int, int> ans(int v, int tl, int tr, int l, int r){
-        cout << "calculando answare en st en nodo " << v << endl;
+        // cout << "calculando answare en st en nodo " << v << "," << l << ","  << r << endl;
         count ++;
         if(count == 10) 
             return make_tuple(0, 0, 0);
@@ -82,14 +82,14 @@ public:
             return st[v];
         }
 
-        int tm = (tl + tm) / 2;
+        int tm = (tl + tr) / 2;
         tuple<int, int, int> left = ans(v*2+1, tl, tm, l, min(r, tm));
         tuple<int, int, int> right = ans(v*2+2, tm + 1, tr, max(l, tm + 1), r);
 
         if(get<1>(left) == 0){
             return make_tuple(get<0>(left) + get<0>(right), 
-                              get<1>(left) + get<1>(left), 
-                              get<2>(right) + get<2>(right));
+                              get<1>(left) + get<1>(right), 
+                              get<2>(left) + get<2>(right));
         }
 
         int pares = min(abs(get<1>(left)), abs(get<2>(right)));
@@ -99,10 +99,8 @@ public:
     }
 
     int ans(int l, int r){
-        cout << "obteniendo answare" << endl;
         tuple<int, int, int> answare = ans(0, 0, N-1, l, r);
-        cout << "answare obtenida" << endl;
-        return get<0>(answare);
+        return 2*get<0>(answare);
     }
 
 };
@@ -110,14 +108,14 @@ public:
 int main(){
     string s; cin >> s;
     ST st(s);
-    st.printST();
+    // st.printST();
 
     int M; cin >> M;
     int l, r;
 
     for(int m = 0; m < M; m++){
         cin >> l >> r;
-        st.ans(l-1, r-1);
+        cout << st.ans(l-1, r-1) << endl;
     }
 
     return 0;
