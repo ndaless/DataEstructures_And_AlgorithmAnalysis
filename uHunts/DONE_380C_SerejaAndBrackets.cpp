@@ -61,7 +61,7 @@ public:
         N = sVec.size();
         st.resize(4*N); // si es 4n? que es mejor, vector o tupla?
         build(0, 0, N-1);
-        count = 0;
+        // count = 0;
     }
 
     void printST(){
