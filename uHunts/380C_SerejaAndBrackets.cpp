@@ -6,7 +6,7 @@ class ST{
     vector<tuple<int, int, int>> st;
     vector<int> sVec;
     int N;
-    int count;
+    // int count;
 
     void build(int v, int tl, int tr){ // el vector se puede llamar con el string? necesitamos el vector?
         if(tl == tr){
@@ -72,9 +72,9 @@ public:
 
     tuple<int, int, int> ans(int v, int tl, int tr, int l, int r){
         // cout << "calculando answare en st en nodo " << v << "," << l << ","  << r << endl;
-        count ++;
-        if(count == 10) 
-            return make_tuple(0, 0, 0);
+        // count ++;
+        // if(count == 10) 
+            // return make_tuple(0, 0, 0);
         if(l > r) // 
             return make_tuple(0, 0, 0);
 
