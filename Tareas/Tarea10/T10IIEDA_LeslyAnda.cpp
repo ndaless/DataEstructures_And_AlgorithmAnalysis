@@ -28,45 +28,49 @@ struct vec{
     vec(const double&_x, const double&_y) : x(_x), y(_y) {}
 };
 
-struct fight(){
+struct fight{
+public:
     vector<point> P; // original poligon
     vector<point> Psort; // poligon for new order
 
-    point pMin; int minIdx;
+    int minIdx; // point pMin;
     vector<vec> vectors;
 
-    fight(vector<point> &_P, point &_pMin){
+    fight(vector<point> &_P){
         P = _P;
-        pMin = _pMin;
+        // pMin = _pMin;
         // como los resorteo?
         Psort = P;
         Psort.insert(Psort.end(), P.begin(), P.end());
 
         minIdx = getMinIdx();
+
+        getVectors();
     }
 
-    toVec(const point &a, const point &b){
-        return vec(b.x - a.x, b.y - a.y);
+    vec toVec(const point &a, const point &b){
+        vec newVec = vec(b.x - a.x, b.y - a.y);
+        return newVec;
     }
 
     void getVectors(){
         for(int i = 0; i < P.size(); i++){
-
+            vectors.push_back(toVec(Psort[minIdx], Psort[minIdx + i]));
         }
     }
 
-    int getMinIdx(){
+    int getMinIdx(){ // do we need this?
         point pMin;
         int idx = 0;
 
         for(int i = 0; i < P.size(); i++){
             point p = P[i];
             // we keep the pivot as the smallest x and largest y
-            if(p.x <= pMin.x){
-                if(p.x == pMin.x && p.y < pMin.y){
+            if(p.y <= pMin.y){
+                if(p.y == pMin.y && p.x < pMin.x){
                     continue;
                 } else {
-                    pMin = newPoint;
+                    pMin = p;
                     idx = i;
                 }
             }
@@ -74,22 +78,66 @@ struct fight(){
         return idx; // return pMin; // for getMinPoint()
     }
 
+    void printPoints(){
+        for(const auto val : P){
+            cout << "(" << val.x << ", " << val.y << ") ";
+        }
+        cout << endl;
+    }
 
-}
+    void printSortedPoints(){
+        for(const auto val : Psort){
+            cout << "(" << val.x << ", " << val.y << ") ";
+        }
+        cout << endl;
+    }
+    
+    void printVectors(){
+        for(const auto val : vectors){
+            cout << "(" << val.x << ", " << val.y << ") ";
+        }
+        cout << endl;
+    }
+
+    bool isInside(const point &p){
+        ///???
+
+        return false;
+    }
+
+};
 
 int main(){
-
-    vector<point> P;
+    vector<point> pol;
     int N; cin >> N;
 
     int x, y;
     for(int i = 0; i < N; i++){
         // we save the point
-        cin >> x >> y:
+        cin >> x >> y;
         point newPoint(x, y);
-        P.push_back(newPoint);
+        pol.push_back(newPoint);
     }
 
+    // fight myFight(pol);
+
+    // cout << myFight.minIdx << ' ' << myFight.P[myFight.minIdx].x << ',' << myFight.P[myFight.minIdx].y << endl;
+
+    // myFight.printPoints();
+    // myFight.printSortedPoints();
+    // myFight.printVectors();
 
     return 0;
 }
+
+// Test Cases
+// 5 4 2
+// 1 -1 
+// 1 2
+// 0 4
+// -1 2
+// -1 -1
+// -2 -1
+// 1 -1
+// 0 1
+// 2 3
