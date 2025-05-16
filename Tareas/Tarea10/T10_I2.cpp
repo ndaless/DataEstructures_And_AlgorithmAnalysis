@@ -80,12 +80,46 @@ struct fight{
         return x1*y2 - x2*y1;
     }
 
-    void jaula(int left, int right){
-        
+    int getBoundaryPoints(int leftIdx, const vec &bombVec){ // se cicla? y cuando?
+        vec v1 = toVec(pivot, points[leftIdx]);
+        vec v2 = toVec(pivot, points[leftIdx-1]);
+
+        if(crossProd(v1, bombVec) == 0 || crossProd(v2, bombVec) == 0) // si la bomba cae en un punto del poligono
+            return true;
+
+        if(crossProd(v1, bombVec) < 0){ // si esta a la derecha del vector pivote
+            if(crossProd(v2, bombVec) > 0){ // pero a la izquierda del anterior
+                return leftIdx; // nos quedamos con ese vector
+            }
+            leftIdx = getBoundaryPoints(leftIdx - leftIdx/2, bombVec); // si no, buscamos uno mas cerca
+        } else{ // si esta a la izquierda del vector pivote
+            leftIdx = getBoundaryPoints(leftIdx + leftIdx/2, bombVec); // buscamos uno que este a la derecha
+        }
+
+        return leftIdx;
     }
 
     bool isInside(const point &bomb){
+        vec bombVec = toVec(pivot, bomb); 
+        if(bombVec.x == 0 && bombVec.y == 0) // si la bomba cae en el punto pivote
+            return true;
 
+        // case when the point is outside of the main angle
+        vec fisrtVec = toVec(pivot, points[1]), lastVec = toVec(pivot, points[N-1]);
+        if(crossProd(fisrtVec, bombVec) < 0 || crossProd(lastVec, bombVec) > 0)
+            return false;
+
+        // get the points corresponding to the vectors of the surrounding triangle
+        int leftIdx = getBoundaryPoints(N-1, bombVec); // idx of the point in the poligon
+        int rightIdx = leftIdx - 1;
+
+        // chech if its inside the triangle
+        point p1 = points[leftIdx], p2 = points[rightIdx];
+        vec v1 = toVec(p1, p2), v2 = toVec(p1, bomb);
+        if(crossProd(v1, v2) <= 0)
+            return true;
+        
+        return false;
     }
         
     void printPoints(){
@@ -108,6 +142,13 @@ int main(){
 
     fight myFight(P);
 
+    point b1(0, 1), b2(2, 3), b3(-2, 1), b4(0, 4), b5(1, -1), b6(-1/2, 3); // falta el punto que es uno de los del poligono 
+    cout << myFight.isInside(b1) << endl; // 1, dentro completamente
+    cout << myFight.isInside(b2) << endl; // 0, fuera completamente
+    cout << myFight.isInside(b3) << endl; // 0, fuera completamente
+    cout << myFight.isInside(b4) << endl; // 1, punto del poligono (p1)
+    cout << myFight.isInside(b5) << endl; // 1, punto pivote
+    cout << myFight.isInside(b6) << endl; // 1, punto en frontera
 
     return 0;
 }
