@@ -166,48 +166,9 @@ public:
 
 };
 
-int main(){
-    vector<point> pol;
-    int N; cin >> N;
-
-    int x, y;
-    for(int i = 0; i < N; i++){
-        // we save the point
-        cin >> x >> y;
-        point newPoint(x, y);
-        pol.push_back(newPoint);
-    }
-
-    // queries
-    fight myFight(pol);
-
-    point bomb(0,1);
-
-    vec v1 = myFight.toVec(pol[0], pol[1]);
-    vec v2 = myFight.toVec(pol[0], bomb);
-
-    int cp = myFight.crossProd(v1, v2);
-
-    // cout << "crossProd((" << v1.x << ',' << v1.y << "), (" << v2.x << ',' << v2.y << ")) = " << cp << endl;
-
-    myFight.printPoints();
-    myFight.printSortedPoints();
-    myFight.printVectors();
-
-    // cout << myFight.minIdx << ' ' << myFight.P[myFight.minIdx].x << ',' << myFight.P[myFight.minIdx].y << '=' << myFight.pMin.x << ',' << myFight.pMin.y << endl;
-
-    point bomb1(0,1);
-    point bomb2(2,3);
-
-    cout << "is inside: (0,1) - " << myFight.isInside(bomb1) << endl;
-    cout << "is inside: (2,3) - " << myFight.isInside(bomb2) << endl;
-
-    return 0;
-}
-
 // int main(){
 //     vector<point> pol;
-//     int N, M, K; cin >> N >> M >> K;
+//     int N; cin >> N;
 
 //     int x, y;
 //     for(int i = 0; i < N; i++){
@@ -220,29 +181,68 @@ int main(){
 //     // queries
 //     fight myFight(pol);
 
-//     int goodExp = 0; int m = 0;
+//     point bomb(0,1);
 
-//     while(m < M){
-//         cin >> x >> y;
-//         point bomb(x, y);
-//         if(myFight.isInside(bomb)){
-//             goodExp++;
-//             if(goodExp == K){
-//                 cout << "YES" << endl;
-//             }
-//         }
-//         m++;
-//     }
+//     vec v1 = myFight.toVec(pol[0], pol[1]);
+//     vec v2 = myFight.toVec(pol[0], bomb);
 
-//     cout << "NO" << endl;
-//     // cout << myFight.minIdx << ' ' << myFight.P[myFight.minIdx].x << ',' << myFight.P[myFight.minIdx].y << endl;
+//     int cp = myFight.crossProd(v1, v2);
 
-//     // myFight.printPoints();
-//     // myFight.printSortedPoints();
-//     // myFight.printVectors();
+//     // cout << "crossProd((" << v1.x << ',' << v1.y << "), (" << v2.x << ',' << v2.y << ")) = " << cp << endl;
+
+//     myFight.printPoints();
+//     myFight.printSortedPoints();
+//     myFight.printVectors();
+
+//     // cout << myFight.minIdx << ' ' << myFight.P[myFight.minIdx].x << ',' << myFight.P[myFight.minIdx].y << '=' << myFight.pMin.x << ',' << myFight.pMin.y << endl;
+
+//     point bomb1(0,1);
+//     point bomb2(2,3);
+
+//     cout << "is inside: (0,1) - " << myFight.isInside(bomb1) << endl;
+//     cout << "is inside: (2,3) - " << myFight.isInside(bomb2) << endl;
 
 //     return 0;
 // }
+
+int main(){
+    vector<point> pol;
+    int N, M, K; cin >> N >> M >> K;
+
+    int x, y;
+    for(int i = 0; i < N; i++){
+        // we save the point
+        cin >> x >> y;
+        point newPoint(x, y);
+        pol.push_back(newPoint);
+    }
+
+    // queries
+    fight myFight(pol);
+
+    int goodExp = 0; int m = 0;
+
+    while(m < M){
+        cin >> x >> y;
+        point bomb(x, y);
+        if(myFight.isInside(bomb)){
+            goodExp++;
+            if(goodExp == K){
+                cout << "YES" << endl;
+            }
+        }
+        m++;
+    }
+
+    cout << "NO" << endl;
+    // cout << myFight.minIdx << ' ' << myFight.P[myFight.minIdx].x << ',' << myFight.P[myFight.minIdx].y << endl;
+
+    // myFight.printPoints();
+    // myFight.printSortedPoints();
+    // myFight.printVectors();
+
+    return 0;
+}
 
 // Test Cases
 // 5 4 2
