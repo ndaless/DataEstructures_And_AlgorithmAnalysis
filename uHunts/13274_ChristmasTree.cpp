@@ -301,7 +301,7 @@ int main(){
     int T; cin >> T;
     int N, K;
     
-    vector <int> sol;
+    // vector <int> sol;
 
     for(int t = 0; t < T; t++){
         cin >> N >> K;
@@ -315,15 +315,15 @@ int main(){
 
         ChristmasTree CT(K, edges);
         
-        sol.push_back(CT.ansqry());
-        // cout << "Case " << t << ": " << CT.ansqry() << endl;
+        // sol.push_back(CT.ansqry());
+        cout << "Case " << t+1 << ": " << CT.ansqry() << endl;
     }
     
-    int t = 1;
+    // int t = 1;
 
-    for(const auto s : sol){
-        cout << "Case " << t << ": " << s << endl;
-        t++;
-    }
-
+    // for(const auto s : sol){
+    //     cout << "Case " << t << ": " << s << endl;
+    //     t++;
+    // }
+    return 0;
 }
