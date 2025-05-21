@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include <optional>
 
 using namespace std;
 
@@ -31,7 +30,7 @@ struct point{ // general point
 //     return mid;
 // }
 
-pair<point, point> moveSegment(const point& ini, const point& end, double d){ // no esta haciendo bien esto
+pair<point, point> moveSegment(const point& ini, const point& end, const double& d){ // no esta haciendo bien esto
     point new_ini, new_end;
 
     // calculamos la direccion del segmento
@@ -69,7 +68,7 @@ point getIntersection(const point& ini_s1, const point& end_s1, const point& ini
     double det = dx1 * dy2 - dy1 * dx2;
 
     // caso: si los segmentos son paralelos
-    if(det == 0)
+    if(fabs(det) < EPS)
         return intersection;
     
     double s = ((ini_s2.x - ini_s1.x) * dy2 - (ini_s2.y - ini_s1.y) * dx2) / det;
@@ -77,7 +76,6 @@ point getIntersection(const point& ini_s1, const point& end_s1, const point& ini
 
     // si el momento en el que los segmentos son iguales esta entre [0,1]
     if(s >= 0 && s <= 1 && t >= 0 && t <= 1){
-        point intersection;
         intersection.x = ini_s1.x + s * dx1;
         intersection.y = ini_s1.y + s * dy1;
         return intersection;
@@ -93,9 +91,9 @@ void printPoints(const vector<point> points){
     cout << endl;
 }
 
- double area(const vector<point> &P){
+double area(const vector<point> &P){
     double result = 0.0, x1, y1, x2,y2;
-    for (int i =0; i < (int)P.size()-1; i++) {
+    for (int i = 0; i < (int)P.size()-1; i++) {
         x1 = P[i].x; x2 =P[i+1].x;
         y1 = P[i].y; y2 =P[i+1].y;
         result += (x1 * y2-x2 * y1);
@@ -103,12 +101,13 @@ void printPoints(const vector<point> points){
     return fabs(result)/ 2.0;
 }
 
-void solve(const vector<point>& P){
+void solve(const vector<point>& P, const double& d){
     vector<point> movedP;
 
     for(int i = 0; i < P.size()-1; i++){
-        point np1 = moveSegment(P[i], P[i+1], 0.5).first;
-        point np2 = moveSegment(P[i], P[i+1], 0.5).second;
+        pair<point, point> movedSegment = moveSegment(P[i], P[i+1], d);
+        point np1 = movedSegment.first;
+        point np2 = movedSegment.second;
         movedP.push_back(np1); movedP.push_back(np2);
     } movedP.push_back(movedP[0]); movedP.push_back(movedP[1]);
 
@@ -124,63 +123,41 @@ void solve(const vector<point>& P){
         } 
     }   
     if(!newP.empty()){
-        printPoints(newP);
+        // printPoints(newP);
     } else{
         cout << "ERROR_2" << endl;
     }
 
-    printPoints(newP);
+    // printPoints(newP);
 
-    cout << area(newP) << endl;
+    cout <<  std::fixed << std::setprecision(3) << area(newP) << endl;
 }
 
 int main(){
     double d; int n; cin >> d >> n;
-    while(d != 0 && n != 0){
+    while(d != 0 || n != 0){
+        // caso de una linea o un punto
+        if(n < 3){
+            cin >> d >> n;
+            continue;
+        }
+
         vector<point> P;
         for(int i = 0; i < n; i++){
-            int x, y; cin >> x >> y;
+            double x, y; cin >> x >> y;
             point p(x, y);
             P.push_back(p);
-        } P.push_back(P[0]);
+        }
 
-        solve(P);
+        // porque están en sentido horario
+        reverse(P.begin(), P.end()); 
+        P.push_back(P[0]);
+
+        // movemos segmentos y calculamos area
+        solve(P, d);
 
         cin >> d >> n;
     }
 
     return 0;
-}
-
-// int main(){
-//     point p1(0,0), p2(4,0), p3(4,4), p4(0,4);
-//     vector<point> P = {p1, p2, p3, p4, p1};
-//     vector<point> movedP;
-
-//     for(int i = 0; i < P.size()-1; i++){
-//         point np1 = moveSegment(P[i], P[i+1], 0.5).first;
-//         point np2 = moveSegment(P[i], P[i+1], 0.5).second;
-//         movedP.push_back(np1); movedP.push_back(np2);
-//     } movedP.push_back(movedP[0]); movedP.push_back(movedP[1]);
-
-//     printPoints(movedP);
-
-//     vector<point> newP;
-//     for(int i = 0; i < movedP.size()-3; i+=2){
-//         cout << i << endl;
-//         point np = getIntersection(movedP[i], movedP[i+1], movedP[i+2], movedP[i+3]);
-//         if(np.x != INVALID){
-//             newP.push_back(np);
-//         } else{
-//             cout << "ERROR_1" << endl;
-//         } 
-//     }   
-//     if(!newP.empty()){
-//         printPoints(newP);
-//     } else{
-//         cout << "ERROR_2" << endl;
-//     }
-
-//     cout << area(newP) << endl;
-//     return 0;
-// }
+} // 2 4 0 0 0 5 5 5 5 0

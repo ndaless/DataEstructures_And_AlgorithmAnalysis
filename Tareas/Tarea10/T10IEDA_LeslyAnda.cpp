@@ -27,7 +27,7 @@ struct vec{
     vec(const double&_x, const double&_y) : x(_x), y(_y) {}
 };
 
-int getPivIdx(const vector<point> points){
+int getPivIdx(const vector<point> points){ // O(N)
     point piv = points[0];
     int idx = 0;
 
@@ -43,7 +43,7 @@ int getPivIdx(const vector<point> points){
     return idx;
 }
 
-void sortPoints(vector<point> &points){
+void sortPoints(vector<point> &points){ // O(N)
     vector<point> points2;
     points2 = points;
     points2.insert(points2.end(), points.begin(), points.end());
@@ -77,7 +77,7 @@ vector<point> minkowski(vector<point>& P, vector<point>& Q){
     Q.push_back(Q[0]);
 
     vector<point> PQ;
-    while(i < N || j < M){
+    while(i < N || j < M){ // O(M + N)
         // cout << i << ' ' << j << endl;
 
         // b) agregamos P[i]+Q[j] a la suma
@@ -159,12 +159,12 @@ int main(){
     // // suma de minkowski
     // printPoints(PQ);
 
-    // cout << "Caso 7: Poligono + Triangulo" << endl; // (0, 0) (4, 0) (4, 1) (3, 3) (0, 3) 
+    // cout << "Caso 7: Poligonos" << endl; // (5, -3) (6, -2) (7, 0) (8, 2) (8, 5) (5, 8) (3, 7) (1, 4) (1, 1) (3, -2) 
     // // puntos
-    // point p1(0,0), p2(3,0), p3(3,1), p4(0,1);
-    // point q1(0,0), q2(1,0), q3(0,2);
+    // point p1(0,0), p2(2,-1), p3(3,0), p4(3,3), p5(2, 4), p6(0,3);
+    // point q1(1,1), q2(3,-2), q3(4,0), q4(5,2), q5(3, 4), q6(1,3);
     // // poligonos
-    // vector<point> P = {p1, p2, p3, p4}; vector<point> Q = {q1, q2, q3};
+    // vector<point> P = {p1, p2, p3, p4, p5, p6}; vector<point> Q = {q1, q2, q3, q4, q5};
     // vector<point> PQ = minkowski(P, Q);
     // // suma de minkowski
     // printPoints(PQ);

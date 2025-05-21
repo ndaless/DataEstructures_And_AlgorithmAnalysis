@@ -56,15 +56,15 @@ void printPts(const vector<pt> points){
 }
 
 int main(){
-    cout << "Caso 1: Triangulos" << endl; // (0, 0) (3, 0) (2, 2) (1, 3) (0, 2)
-    // puntos
-    pt p1(0,0), p2(2,0), p3(1,1);
-    pt q1(0,0), q2(1,0), q3(0,2);
-    // poligonos
-    vector<pt> P = {p1, p2, p3}; vector<pt> Q = {q1, q2, q3};
-    vector<pt> PQ = minkowski(P, Q);
-    // suma de minkowski
-    printPts(PQ);
+    // cout << "Caso 1: Triangulos" << endl; // (0, 0) (3, 0) (2, 2) (1, 3) (0, 2)
+    // // puntos
+    // pt p1(0,0), p2(2,0), p3(1,1);
+    // pt q1(0,0), q2(1,0), q3(0,2);
+    // // poligonos
+    // vector<pt> P = {p1, p2, p3}; vector<pt> Q = {q1, q2, q3};
+    // vector<pt> PQ = minkowski(P, Q);
+    // // suma de minkowski
+    // printPts(PQ);
 
     // cout << "Caso 2: Rectángulos" << endl; // (1,1) (3,1) (3,3) (1,3)
     // // puntos
@@ -116,15 +116,15 @@ int main(){
     // // suma de minkowski
     // printPts(PQ);
 
-    // cout << "Caso 7: Poligono + Triangulo" << endl; // (0, 0) (4, 0) (4, 1) (3, 3) (0, 3) 
-    // // puntos
-    // pt p1(0,0), p2(3,0), p3(3,1), p4(0,1);
-    // pt q1(0,0), q2(1,0), q3(0,2);
-    // // poligonos
-    // vector<pt> P = {p1, p2, p3, p4}; vector<pt> Q = {q1, q2, q3};
-    // vector<pt> PQ = minkowski(P, Q);
-    // // suma de minkowski
-    // printPts(PQ);
+    cout << "Caso 7: Poligono + Triangulo" << endl; //
+    // puntos
+    pt p1(0,0), p2(2,-1), p3(3,0), p4(3,3), p5(2, 4), p6(0,3);
+    pt q1(1,1), q2(3,-2), q3(4,0), q4(5,2), q5(3, 4), q6(1,3);
+    // poligonos
+    vector<pt> P = {p1, p2, p3, p4, p5, p6}; vector<pt> Q = {q1, q2, q3, q4, q5};
+    vector<pt> PQ = minkowski(P, Q);
+    // suma de minkowski
+    printPts(PQ);
 
     // cout << "Caso 8: Line + Line" << endl; // (0, 0) (1, 0) (2, 0) (2, 1) (2, 2) (0, 2) 
     // // puntos
@@ -137,3 +137,5 @@ int main(){
     // printPts(PQ);
 
 }
+
+  
