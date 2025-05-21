@@ -31,7 +31,7 @@ struct point{ // general point
 //     return mid;
 // }
 
-pair<point, point> moveSegment(const point& ini, const point& end, double d){
+pair<point, point> moveSegment(const point& ini, const point& end, double d){ // no esta haciendo bien esto
     point new_ini, new_end;
 
     // calculamos la direccion del segmento
@@ -112,7 +112,7 @@ void solve(const vector<point>& P){
         movedP.push_back(np1); movedP.push_back(np2);
     } movedP.push_back(movedP[0]); movedP.push_back(movedP[1]);
 
-    printPoints(movedP);
+    // printPoints(movedP);
 
     vector<point> newP;
     for(int i = 0; i < movedP.size()-3; i+=2){
@@ -128,6 +128,8 @@ void solve(const vector<point>& P){
     } else{
         cout << "ERROR_2" << endl;
     }
+
+    printPoints(newP);
 
     cout << area(newP) << endl;
 }
