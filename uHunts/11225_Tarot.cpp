@@ -79,6 +79,8 @@ int main(){
         }else{
             cout << "Hand #" << t+1 << "\nGame lost by " << abs(diff) << " point(s).\n";
         }
+        if(t != T-1)
+            cout << endl;
     }
     
     return 0;
