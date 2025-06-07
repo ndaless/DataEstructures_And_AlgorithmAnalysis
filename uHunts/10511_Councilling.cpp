@@ -91,6 +91,26 @@ void buildGraph(){
     }
 
 int main(){
+    int T; cin >> T;
+
+    for(int t = 0; t < T; t++){
+        string line; string name, party, club;
+        cin.ignore(); getline(cin, line); getline(cin, line);
+        while(!line.empty()){
+            vector<string> clubs;
+
+            istringstream tokens(line);
+            tokens >> name >> party;
+            while(tokens >> club)
+                clubs.push_back(club);
+
+            for(const auto c : clubs){
+                cout << c << ' ';
+            }cout << endl;
+
+            getline(cin, line);
+        }
+    }
 
     return 0;
 }
