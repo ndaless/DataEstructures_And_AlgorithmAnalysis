@@ -1,3 +1,6 @@
+// analiza un docomento, tokenizar y contar palabras
+// map
+
 #include <bits/stdc++.h>
 
 using namespace std;

@@ -1,3 +1,7 @@
+// dividir los ingresos de una exhibición de sellos
+// segun las cartas de cada amigo
+// map
+
 #include<bits/stdc++.h>
 
 using namespace std;

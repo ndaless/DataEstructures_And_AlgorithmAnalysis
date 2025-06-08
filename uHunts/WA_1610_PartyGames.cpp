@@ -1,3 +1,6 @@
+// ordenar un conjunto de nombres y obtener una cadena que los divida por la mitad
+// string
+
 # include <bits/stdc++.h>
 
 using namespace std;

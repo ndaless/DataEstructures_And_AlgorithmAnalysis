@@ -1,3 +1,6 @@
+// intentar poner un puesto de hamburguesas 'B' en una posición que cumpla ciertos requerimientos
+// string processing
+
 #include<bits/stdc++.h>
 
 using namespace std;

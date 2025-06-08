@@ -1,3 +1,7 @@
+// encontrar el orden topológico más grande lexicográficamente de un grafo dirigido acíclico
+// después de eliminar ciertas aristas.
+// DFS
+
 # include <iostream>
 # include <vector>
 

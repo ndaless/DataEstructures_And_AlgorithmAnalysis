@@ -1,3 +1,7 @@
+// calcular el mejor precio de un producto para satisfacer
+// a los consumidores y productores
+// complete search
+
 #include<bits/stdc++.h>
 
 using namespace std;

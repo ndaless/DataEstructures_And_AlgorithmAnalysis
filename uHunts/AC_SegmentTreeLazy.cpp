@@ -1,3 +1,6 @@
+// manejar operaciones de cambio en un vector
+// segment tree lazy
+
 #include <bits/stdc++.h>
 #define optimizar_io
 using namespace std;

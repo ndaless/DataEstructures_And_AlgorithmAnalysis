@@ -1,3 +1,6 @@
+// identificar el caracter segun una 'imagen' hecha de caracteres de el
+// string processing
+
 # include <bits/stdc++.h>
 
 using namespace std;

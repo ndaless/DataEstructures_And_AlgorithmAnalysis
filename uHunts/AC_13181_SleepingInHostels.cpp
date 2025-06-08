@@ -1,3 +1,6 @@
+// calcular cual es la mejor cama para dormir en un hostal (la que este mas alejada de las demas)
+// array manipulation
+
 #include <bits/stdc++.h>
 
 using namespace std;

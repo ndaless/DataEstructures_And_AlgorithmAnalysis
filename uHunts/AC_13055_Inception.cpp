@@ -1,3 +1,6 @@
+// mantener un seguimiento de los sueños a los que una persona entra (un sueño dentro de otro dentro de otro...)
+// stack
+
 #include<bits/stdc++.h>
 
 using namespace std;

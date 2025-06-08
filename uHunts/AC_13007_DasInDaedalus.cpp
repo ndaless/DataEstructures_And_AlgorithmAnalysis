@@ -1,3 +1,6 @@
+// intentar maximizar los puntos de un jugador sabiendo el resultado del juego 'dont be greedy'
+// greedy
+
 #include <bits/stdc++.h>
 
 using namespace std;

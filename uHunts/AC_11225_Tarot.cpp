@@ -1,3 +1,6 @@
+// determinar si un jugador gano el juego dadas las cartas que obtuvo
+// map
+
 # include<bits/stdc++.h>
 
 using namespace std;

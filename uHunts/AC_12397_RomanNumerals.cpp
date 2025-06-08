@@ -1,3 +1,6 @@
+// contar el total de ceriilos utilizados para construir un numero en romano
+// map
+
 #include <bits/stdc++.h>
 
 using namespace std;

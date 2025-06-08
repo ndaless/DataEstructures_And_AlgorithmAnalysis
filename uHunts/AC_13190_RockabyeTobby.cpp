@@ -1,3 +1,6 @@
+// calcular las primeras k medidinas qu tomara Tobby dados los tiempos de toma
+// priority queue
+
 #include <bits/stdc++.h>
 
 using namespace std;

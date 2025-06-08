@@ -1,3 +1,5 @@
+// calculate the acumulated water on a city dado un arrego
+// stack
 #include<bits/stdc++.h>
 
 using namespace std;

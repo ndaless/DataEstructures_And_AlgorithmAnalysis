@@ -1,3 +1,6 @@
+// identify if a word is a palindrome, a concatenation of two palindroms or a simple word
+// z function
+
 # include <bits/stdc++.h>
 
 using namespace std;

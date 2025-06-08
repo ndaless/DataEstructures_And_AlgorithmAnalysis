@@ -1,3 +1,6 @@
+// encontrar la mayor caída en los precios de las acciones de Amalgamated Artichokes en un período determinado
+// vector
+
 #include <bits/stdc++.h>
 
 using namespace std;

@@ -1,3 +1,6 @@
+// encontrar la subsecuencia válida más larga de una cadena de paréntesis en varios rangos dados
+// segment tree
+
 #include <bits/stdc++.h>
 
 using namespace std;

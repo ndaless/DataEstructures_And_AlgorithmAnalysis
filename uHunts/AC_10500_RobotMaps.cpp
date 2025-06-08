@@ -1,3 +1,6 @@
+// este problema trata sobre un robot que explora un almacén peligroso y construye un mapa parcial del entorno
+// output
+
 #include <bits/stdc++.h>
 
 using namespace std;

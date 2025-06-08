@@ -1,3 +1,6 @@
+// encontrar el ingreso máximo 𝑣 que, después de pagar impuestos,
+// resulta en una cantidad menor que el ingreso de alguien que gana menos que 𝑣
+// math
 #include<bits/stdc++.h>
 
 using namespace std;

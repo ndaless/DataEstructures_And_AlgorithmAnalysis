@@ -1,3 +1,6 @@
+// encontrar el valor máximo de la operación bitwise AND entre un número dado 𝑎 y una secuencia de números
+// Trie
+
 #include<bits/stdc++.h>
 
 using namespace std;

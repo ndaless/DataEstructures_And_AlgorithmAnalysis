@@ -1,3 +1,6 @@
+// clasificar problemas segun las palabras que aparecen en ellos
+// map
+
 #include <bits/stdc++.h>
 
 using namespace std;

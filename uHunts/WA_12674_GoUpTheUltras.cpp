@@ -1,3 +1,6 @@
+// encontrar los picos de un arreglo y evaluar si cumplen la propiedad de ser 'ultras'
+// sparce table
+
 #include <bits/stdc++.h>
 
 using namespace std;

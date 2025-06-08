@@ -1,3 +1,7 @@
+// calcular la fecha después de 𝐾 dias
+// a partir de una fecha dada en el calendario
+// time
+
 #include<bits/stdc++.h>
 
 using namespace std;
